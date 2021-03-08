@@ -1,4 +1,5 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import React, { FormEvent, useCallback, useEffect, useState } from "react";
+import ModalRemove from "../../components/ModalRemove";
 import api from "../../services/api";
 import FormatTags from "../../util/formatTags";
 import "./styles.css";
@@ -79,6 +80,7 @@ function Home() {
           </div>
         ))}
       </div>
+      <ModalRemove />
     </>
   );
 }

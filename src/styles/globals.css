@@ -4,8 +4,11 @@
   box-sizing: border-box;
   outline: none;
 }
+html,
 body {
-  background-color: #f8f8f9;
+  background: #f8f8f9;
+  height: 100%;
+  width: 100%;
 }
 body,
 input,
