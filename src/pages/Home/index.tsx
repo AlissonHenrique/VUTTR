@@ -1,8 +1,10 @@
 import React, { FormEvent, useCallback, useEffect, useState } from "react";
-import ModalRemove from "../../components/ModalRemove";
+import { Modal } from "./styles";
 import api from "../../services/api";
 import FormatTags from "../../util/formatTags";
 import "./styles.css";
+import { GrFormClose } from "react-icons/gr";
+import Button from "../../components/Button";
 
 interface Tools {
   id: number;
@@ -13,13 +15,23 @@ interface Tools {
 }
 
 function Home() {
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpenAdd, setIsOpenAdd] = useState(false);
+
+  const [title, setTitle] = useState("");
+  const [link, setLink] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
+
   const [list, setList] = useState<Tools[]>([]);
   const [checkbox, setCheckbox] = useState<any>(false);
   const [search, setSearch] = useState("");
+
+  const [idRemove, setIdRemove] = useState<number>();
+
   useEffect(() => {
     async function loadList() {
       const response = await api.get("/tools");
-
       return setList(FormatTags(response.data));
     }
     loadList();
@@ -41,6 +53,34 @@ function Home() {
   function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.type === "checkbox" ? e.target.checked : false;
     setCheckbox(value);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+  function openModalRemove(id: number) {
+    setIsOpen(true);
+    setIdRemove(id);
+  }
+  async function handleRemoveId() {
+    await api.delete(`tools/${idRemove}`);
+    setIsOpen(false);
+  }
+  function closeModalAdd() {
+    setIsOpenAdd(false);
+  }
+  function openModalAdd() {
+    setIsOpenAdd(true);
+  }
+  async function handleAddSubmit() {
+    const data = {
+      title,
+      link,
+      description,
+      tags: tags.split(" ").map((tg) => tg.trim()),
+    };
+    await api.post("tools", data);
+    setIsOpenAdd(false);
   }
 
   return (
@@ -65,7 +105,9 @@ function Home() {
             </div>
           </form>
 
-          <button type="button"> Add</button>
+          <Button colorType="blue" onClick={openModalAdd}>
+            Add
+          </Button>
         </div>
         {list.map((item) => (
           <div className="card" key={item.id}>
@@ -73,14 +115,83 @@ function Home() {
               <a href={item.link} rel="noreferrer" target="_blank">
                 {item.title}
               </a>
-              <button type="button">Remove</button>
+              <Button colorType="red" onClick={() => openModalRemove(item.id)}>
+                Remove
+              </Button>
             </div>
             <p>{item.description}</p>
             <span>{item.tags}</span>
           </div>
         ))}
       </div>
-      <ModalRemove />
+      {modalIsOpen && (
+        <Modal>
+          <div className="container-modal">
+            <div className="header-modal">
+              <h4>Remove tool</h4>
+              <GrFormClose size={20} color="#8F8A9B" onClick={closeModal} />
+            </div>
+            <p>
+              Are you sutre you want to remove <b>hotel?</b>
+            </p>
+            <div className="content-buttons">
+              <Button colorType="red" onClick={closeModal}>
+                Cancel
+              </Button>
+              <Button colorType="blue" onClick={handleRemoveId}>
+                Yes, remove
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      {modalIsOpenAdd && (
+        <Modal>
+          <div className="container-modal">
+            <div className="header-modal">
+              <h4>Add new tool</h4>
+              <GrFormClose size={20} color="#8F8A9B" onClick={closeModalAdd} />
+            </div>
+            <div className="content-inpt">
+              <label>Tool Name</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>{" "}
+            <div className="content-inpt">
+              <label>Tool Link</label>
+              <input
+                type="text"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+              />
+            </div>
+            <div className="content-inpt">
+              <label>Tool description</label>
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+            <div className="content-inpt">
+              <label>Tags</label>
+              <input
+                type="text"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+              />
+            </div>
+            <div className="content-buttons">
+              <Button colorType="blue" onClick={handleAddSubmit}>
+                Add tool
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </>
   );
 }

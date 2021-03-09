@@ -1,13 +1,8 @@
 import "./styles/globals.css";
 import Home from "./pages/Home";
 
-import { ModalProvider } from "./context/ModalContext";
 function App() {
-  return (
-    <ModalProvider>
-      <Home />
-    </ModalProvider>
-  );
+  return <Home />;
 }
 
 export default App;
