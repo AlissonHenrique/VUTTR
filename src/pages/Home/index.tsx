@@ -24,7 +24,7 @@ function Home() {
   const [tags, setTags] = useState("");
 
   const [list, setList] = useState<Tools[]>([]);
-  const [checkbox, setCheckbox] = useState<any>(false);
+  const [checkbox, setCheckbox] = useState<boolean>(false);
   const [search, setSearch] = useState("");
 
   const [idRemove, setIdRemove] = useState<number>();
@@ -50,11 +50,10 @@ function Home() {
     },
     [search, checkbox]
   );
-  function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.type === "checkbox" ? e.target.checked : false;
+
+  function handleCheckbox(value: boolean) {
     setCheckbox(value);
   }
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -97,9 +96,10 @@ function Home() {
             />
             <div className="container-checkbox">
               <input
+                readOnly
                 type="checkbox"
                 checked={checkbox}
-                onChange={(e) => handleCheckbox(e)}
+                onClick={() => handleCheckbox(!checkbox)}
               />
               <label>Search label in tags only</label>
             </div>
