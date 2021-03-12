@@ -2,10 +2,10 @@ import React, { FormEvent, useCallback, useEffect, useState } from "react";
 import { Modal } from "./styles";
 import api from "../../services/api";
 import FormatTags from "../../util/formatTags";
-import "./styles.css";
+//import "./styles.css";
 import { GrFormClose } from "react-icons/gr";
 import Button from "../../components/Button";
-
+import { Container, Card } from "./styles";
 interface Tools {
   id: number;
   title: string;
@@ -84,7 +84,7 @@ function Home() {
 
   return (
     <>
-      <div className="container">
+      <Container>
         <h1>VUTTR</h1>
         <h4>Very useful Tools to Remenber</h4>
         <div className="box-search">
@@ -110,7 +110,7 @@ function Home() {
           </Button>
         </div>
         {list.map((item) => (
-          <div className="card" key={item.id}>
+          <Card key={item.id}>
             <div className="card-header">
               <a href={item.link} rel="noreferrer" target="_blank">
                 {item.title}
@@ -121,9 +121,9 @@ function Home() {
             </div>
             <p>{item.description}</p>
             <span>{item.tags}</span>
-          </div>
+          </Card>
         ))}
-      </div>
+      </Container>
       {modalIsOpen && (
         <Modal>
           <div className="container-modal">

@@ -134,18 +134,7 @@
 .container > .box-search > button:active {
   background: #244aa8 0% 0% no-repeat;
 }
-.container > .card {
-  background: #ffffff 0% 0% no-repeat;
-  border: 1px solid #ebeaed;
-  border-radius: 5px;
-  padding: 32px;
-  margin-bottom: 32px;
-}
-.container > .card > span {
-  font-weight: 600;
-  display: block;
-  margin-top: 32px;
-}
+
 .container > .card > .card-header {
   display: flex;
   justify-content: space-between;

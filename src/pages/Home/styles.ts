@@ -1,5 +1,84 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  max-width: 992px;
+  margin: 42px auto 0 auto;
+  h1 {
+    font-size: 42px;
+    font-weight: 600;
+    letter-spacing: 0.84px;
+  }
+  h4 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+  }
+  .box-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0;
+    .box-inputs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      input[type="text"] {
+        background: #f5f4f6 0% 0% no-repeat;
+        border: 1px solid #ebeaed;
+        border-radius: 5px;
+        width: 403px;
+        height: 50px;
+        font-size: 20px;
+        color: #b1adb9;
+        padding: 13px 21px;
+        margin-right: 16px;
+      }
+      input[type="text"]:focus {
+        background: #ebeaed 0% 0% no-repeat padding-box;
+        border: 1px solid #dedce1;
+        border-radius: 5px;
+        color: #170c3a;
+      }
+    }
+  }
+`;
+export const Card = styled.div`
+  background: #ffffff 0% 0% no-repeat;
+  border: 1px solid #ebeaed;
+  border-radius: 5px;
+  padding: 32px;
+  margin-bottom: 32px;
+  span {
+    font-weight: 600;
+    display: block;
+    margin-top: 32px;
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    button {
+      width: 174px;
+      background: #f95e5a 0% 0% no-repeat padding-box;
+      border-radius: 5px;
+      border: 0;
+      text-align: center;
+      font-size: 18px;
+      letter-spacing: 0.36px;
+      color: #ffffff;
+      padding: 14px 23px;
+      transition: background-color 0.2s;
+      &:hover {
+        background: #cc4c4c 0% 0% no-repeat;
+      }
+      &:active {
+        background: #a53f3f 0% 0% no-repeat;
+      }
+    }
+  }
+`;
+
 export const Modal = styled.div`
   width: 100%;
   height: 100%;
@@ -12,7 +91,7 @@ export const Modal = styled.div`
   @media (max-width: 1920px) {
     height: 1090px;
   }
-  .container-modal {
+  -modal {
     max-width: 600px;
 
     background: #ffffff 0% 0% no-repeat;
