@@ -87,6 +87,7 @@ function Home() {
       <Container>
         <h1>VUTTR</h1>
         <h4>Very useful Tools to Remenber</h4>
+
         <div className="box-search">
           <form className="box-inputs" onSubmit={handleSearch}>
             <input
@@ -103,11 +104,10 @@ function Home() {
               />
               <label>Search label in tags only</label>
             </div>
+            <Button colorType="blue" onClick={openModalAdd}>
+              Add
+            </Button>
           </form>
-
-          <Button colorType="blue" onClick={openModalAdd}>
-            Add
-          </Button>
         </div>
         {list.map((item) => (
           <Card key={item.id}>
@@ -135,10 +135,10 @@ function Home() {
               Are you sutre you want to remove <b>hotel?</b>
             </p>
             <div className="content-buttons">
-              <Button colorType="red" onClick={closeModal}>
+              <Button colorType="red-2" onClick={closeModal}>
                 Cancel
               </Button>
-              <Button colorType="blue" onClick={handleRemoveId}>
+              <Button colorType="blue-2" onClick={handleRemoveId}>
                 Yes, remove
               </Button>
             </div>
@@ -159,7 +159,7 @@ function Home() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
-            </div>{" "}
+            </div>
             <div className="content-inpt">
               <label>Tool Link</label>
               <input
@@ -185,7 +185,7 @@ function Home() {
               />
             </div>
             <div className="content-buttons">
-              <Button colorType="blue" onClick={handleAddSubmit}>
+              <Button colorType="blue-2" onClick={handleAddSubmit}>
                 Add tool
               </Button>
             </div>

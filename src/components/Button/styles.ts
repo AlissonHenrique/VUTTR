@@ -10,23 +10,48 @@ export const Container = styled.button`
   letter-spacing: 0.36px;
   color: #ffffff;
   padding: 14px 23px;
+  font-weight: 600;
+
+  height: 50px;
+
   transition: background-color 0.2s;
   &.blue {
-    background: #365df0 0% 0%;
+    background: #365df0;
     &:hover {
-      background: #2f55cc 0% 0%;
+      background: #2f55cc;
     }
     &:active {
-      background: #244aa8 0% 0%;
+      background: #244aa8;
+    }
+  }
+  &.blue-2 {
+    background: #e1e7fd;
+    color: #365df0;
+    &:hover {
+      background: #cad6fc;
+    }
+    &:active {
+      background: #b9c6fa;
     }
   }
   &.red {
-    background: #f95e5a 0% 0%;
+    background: #f95e5a;
+
     &:hover {
-      background: #cc4c4c 0% 0%;
+      background: #cc4c4c;
     }
     &:active {
-      background: #a53f3f 0% 0%;
+      background: #a53f3f;
+    }
+  }
+  &.red-2 {
+    background: #feefee;
+    color: #f95e5a;
+    &:hover {
+      background: #fcd7d6;
+    }
+    &:active {
+      background: #fcc6c5;
     }
   }
 `;
