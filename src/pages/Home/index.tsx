@@ -1,11 +1,14 @@
-import React, { FormEvent, useCallback, useEffect, useState } from "react";
-import { Modal } from "./styles";
+import React, { useEffect, useState } from "react";
+
 import api from "../../services/api";
-import FormatTags from "../../util/formatTags";
-//import "./styles.css";
-import { GrFormClose } from "react-icons/gr";
+import { FormatTags } from "../../util/formatTags";
+
 import Button from "../../components/Button";
-import { Container, Card } from "./styles";
+import { Container } from "./styles";
+import { Card } from "../../components/Card";
+import { ModalAdd } from "../../components/ModalAdd";
+
+import { ModalRemove } from "../../components/ModalRemove";
 interface Tools {
   id: number;
   title: string;
@@ -15,183 +18,116 @@ interface Tools {
 }
 
 function Home() {
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [modalIsOpenAdd, setIsOpenAdd] = useState(false);
-
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState("");
-
-  const [list, setList] = useState<Tools[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpenRemove, setModalOpenRemove] = useState(false);
   const [checkbox, setCheckbox] = useState<boolean>(false);
   const [search, setSearch] = useState("");
-
-  const [idRemove, setIdRemove] = useState<number>();
+  const [tools, setTools] = useState<Tools[]>([]);
+  const [removeId, setRemoveId] = useState<number>();
 
   useEffect(() => {
-    async function loadList() {
+    async function loadTools() {
       const response = await api.get("/tools");
-      return setList(FormatTags(response.data));
+      return setTools(FormatTags(response.data));
     }
-    loadList();
+    loadTools();
   }, []);
-  const handleSearch = useCallback(
-    async (e: FormEvent) => {
-      e.preventDefault();
-      try {
-        const params = checkbox === false ? "?q=" : "?tags_like=";
-        const response = await api.get(`tools${params}${search}`);
 
-        setList(FormatTags(response.data));
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [search, checkbox]
-  );
+  // useEffect(() => {
+  //   const cb = checkbox === true ? "tags" : "title";
+  //   const filter = list.filter((item) =>
+  //     item.title.toLowerCase().includes(search.toLowerCase())
+  //   );
 
-  function handleCheckbox(value: boolean) {
-    setCheckbox(value);
+  //   setListFilter(filter);
+  // }, [list, search]);
+
+  // async function handleAddSubmit() {
+  //   const data = {
+  //     title,
+  //     link,
+  //     description,
+  //     tags: tags.split(" ").map((tg) => tg.trim()),
+  //   };
+  //   await api.post("tools", data);
+  //   setTitle("");
+  //   setLink("");
+  //   setDescription("");
+  //   setTags("");
+  //   setIsOpenAdd(false);
+
+  //   const response = await api.get("/tools");
+  //   setList(FormatTags(response.data));
+  // }
+
+  async function handleSubmitAddModal(data: any) {
+    try {
+      const response = await api.post("tools", data);
+      setTools([...tools, response.data]);
+    } catch (err) {
+      console.log(err);
+    }
   }
-  function closeModal() {
-    setIsOpen(false);
+  function toggleModal() {
+    setModalOpen(!modalOpen);
   }
-  function openModalRemove(id: number) {
-    setIsOpen(true);
-    setIdRemove(id);
+  function toggleModalRemove() {
+    setModalOpenRemove(!modalOpenRemove);
   }
-  async function handleRemoveId() {
-    await api.delete(`tools/${idRemove}`);
-    setIsOpen(false);
-  }
-  function closeModalAdd() {
-    setIsOpenAdd(false);
-  }
-  function openModalAdd() {
-    setIsOpenAdd(true);
-  }
-  async function handleAddSubmit() {
-    const data = {
-      title,
-      link,
-      description,
-      tags: tags.split(" ").map((tg) => tg.trim()),
-    };
-    await api.post("tools", data);
-    setIsOpenAdd(false);
+  function toggleModalRemoveID(id: number) {
+    setModalOpenRemove(!modalOpenRemove);
+    setRemoveId(id);
   }
 
+  async function handleRemove() {
+    await api.delete(`tools/${removeId}`);
+    const filterTool = [...tools].filter((tool) => tool.id !== removeId);
+    setTools(filterTool);
+    setModalOpenRemove(!modalOpenRemove);
+  }
   return (
     <>
       <Container>
         <h1>VUTTR</h1>
         <h4>Very useful Tools to Remenber</h4>
-
         <div className="box-search">
-          <form className="box-inputs" onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <div className="container-checkbox">
             <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              readOnly
+              type="checkbox"
+              checked={checkbox}
+              onClick={() => setCheckbox(!checkbox)}
             />
-            <div className="container-checkbox">
-              <input
-                readOnly
-                type="checkbox"
-                checked={checkbox}
-                onClick={() => handleCheckbox(!checkbox)}
-              />
-              <label>Search label in tags only</label>
-            </div>
-            <Button colorType="blue" onClick={openModalAdd}>
-              Add
-            </Button>
-          </form>
+            <label>Search label in tags only</label>
+          </div>
+          <Button colorType="blue" onClick={toggleModal}>
+            Add
+          </Button>
         </div>
-        {list.map((item) => (
-          <Card key={item.id}>
-            <div className="card-header">
-              <a href={item.link} rel="noreferrer" target="_blank">
-                {item.title}
-              </a>
-              <Button colorType="red" onClick={() => openModalRemove(item.id)}>
-                Remove
-              </Button>
-            </div>
-            <p>{item.description}</p>
-            <span>{item.tags}</span>
-          </Card>
+
+        {tools.map((tool) => (
+          <Card
+            key={tool.id}
+            tool={tool}
+            handleOpenModalRemove={toggleModalRemoveID}
+          />
         ))}
+        <ModalAdd
+          isOpen={modalOpen}
+          setIsOpen={toggleModal}
+          handleSubmit={handleSubmitAddModal}
+        />
+        <ModalRemove
+          isOpen={modalOpenRemove}
+          setIsOpenRemove={toggleModalRemove}
+          handleRemove={handleRemove}
+        />
       </Container>
-      {modalIsOpen && (
-        <Modal>
-          <div className="container-modal">
-            <div className="header-modal">
-              <h4>Remove tool</h4>
-              <GrFormClose size={20} color="#8F8A9B" onClick={closeModal} />
-            </div>
-            <p>
-              Are you sutre you want to remove <b>hotel?</b>
-            </p>
-            <div className="content-buttons">
-              <Button colorType="red-2" onClick={closeModal}>
-                Cancel
-              </Button>
-              <Button colorType="blue-2" onClick={handleRemoveId}>
-                Yes, remove
-              </Button>
-            </div>
-          </div>
-        </Modal>
-      )}
-      {modalIsOpenAdd && (
-        <Modal>
-          <div className="container-modal">
-            <div className="header-modal">
-              <h4>Add new tool</h4>
-              <GrFormClose size={20} color="#8F8A9B" onClick={closeModalAdd} />
-            </div>
-            <div className="content-inpt">
-              <label>Tool Name</label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="content-inpt">
-              <label>Tool Link</label>
-              <input
-                type="text"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-              />
-            </div>
-            <div className="content-inpt">
-              <label>Tool description</label>
-              <input
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
-            <div className="content-inpt">
-              <label>Tags</label>
-              <input
-                type="text"
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-              />
-            </div>
-            <div className="content-buttons">
-              <Button colorType="blue-2" onClick={handleAddSubmit}>
-                Add tool
-              </Button>
-            </div>
-          </div>
-        </Modal>
-      )}
     </>
   );
 }
