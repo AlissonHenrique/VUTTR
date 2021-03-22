@@ -28,7 +28,8 @@ function Home() {
   useEffect(() => {
     async function loadTools() {
       const response = await api.get("/tools");
-      return setTools(FormatTags(response.data));
+      console.log(response.data);
+      return setTools(response.data);
     }
     loadTools();
   }, []);
@@ -41,24 +42,6 @@ function Home() {
 
   //   setListFilter(filter);
   // }, [list, search]);
-
-  // async function handleAddSubmit() {
-  //   const data = {
-  //     title,
-  //     link,
-  //     description,
-  //     tags: tags.split(" ").map((tg) => tg.trim()),
-  //   };
-  //   await api.post("tools", data);
-  //   setTitle("");
-  //   setLink("");
-  //   setDescription("");
-  //   setTags("");
-  //   setIsOpenAdd(false);
-
-  //   const response = await api.get("/tools");
-  //   setList(FormatTags(response.data));
-  // }
 
   async function handleSubmitAddModal(data: any) {
     try {

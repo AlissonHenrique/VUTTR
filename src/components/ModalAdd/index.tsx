@@ -2,6 +2,7 @@ import { GrFormClose } from "react-icons/gr";
 import Button from "../Button";
 import { Modal } from "../Modal";
 import { useState } from "react";
+import { FormatTags } from "../../util/formatTags";
 
 interface PropsItems {
   title: string;
@@ -27,11 +28,15 @@ export function ModalAdd({ isOpen, setIsOpen, handleSubmit }: PropsModalAdd) {
       title,
       link,
       description,
-      tags: tags.split(" ").map((tg) => tg.trim()),
+      tags,
     };
-
-    handleSubmit(data);
+    console.log(data);
+    // handleSubmit(data);
     setIsOpen();
+    setTitle("");
+    setLink("");
+    setDescription("");
+    setTags("");
   }
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
