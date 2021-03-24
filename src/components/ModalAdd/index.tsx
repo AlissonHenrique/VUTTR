@@ -30,7 +30,7 @@ export function ModalAdd({ isOpen, setIsOpen, handleSubmit }: PropsModalAdd) {
       description,
       tags,
     };
-    console.log(data);
+
     // handleSubmit(data);
     setIsOpen();
     setTitle("");

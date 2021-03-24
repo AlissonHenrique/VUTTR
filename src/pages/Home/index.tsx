@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useCallback, useEffect, useState } from "react";
 
 import api from "../../services/api";
 import { FormatTags } from "../../util/formatTags";
 
 import Button from "../../components/Button";
-import { Container } from "./styles";
+import { Container, Form } from "./styles";
 import { Card } from "../../components/Card";
 import { ModalAdd } from "../../components/ModalAdd";
 
 import { ModalRemove } from "../../components/ModalRemove";
+import { toast } from "react-toastify";
 interface Tools {
   id: number;
   title: string;
@@ -28,7 +29,6 @@ function Home() {
   useEffect(() => {
     async function loadTools() {
       const response = await api.get("/tools");
-      console.log(response.data);
       return setTools(response.data);
     }
     loadTools();
@@ -68,26 +68,42 @@ function Home() {
     setTools(filterTool);
     setModalOpenRemove(!modalOpenRemove);
   }
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    try {
+      if (!checkbox) {
+        const response = await api.get(`/tools/?q=${search}`);
+        setTools(response.data);
+      } else {
+        const response = await api.get(`/tools/?tags_like=${search}`);
+        setSearch(response.data);
+      }
+    } catch {
+      toast.error("Word not found");
+    }
+  }
   return (
     <>
       <Container>
         <h1>VUTTR</h1>
         <h4>Very useful Tools to Remenber</h4>
         <div className="box-search">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <div className="container-checkbox">
+          <Form onSubmit={handleSubmit}>
             <input
-              readOnly
-              type="checkbox"
-              checked={checkbox}
-              onClick={() => setCheckbox(!checkbox)}
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
-            <label>Search label in tags only</label>
-          </div>
+            <div className="container-checkbox">
+              <input
+                readOnly
+                type="checkbox"
+                checked={checkbox}
+                onClick={() => setCheckbox(!checkbox)}
+              />
+              <label>Search label in tags only</label>
+            </div>
+          </Form>
           <Button colorType="blue" onClick={toggleModal}>
             Add
           </Button>
