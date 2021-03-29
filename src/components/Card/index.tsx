@@ -20,7 +20,11 @@ export function Card({ handleOpenModalRemove, tool }: PropsCard) {
         <a href={tool.link} rel="noreferrer" target="_blank">
           {tool.title}
         </a>
-        <Button colorType="red" onClick={() => handleOpenModalRemove(tool.id)}>
+        <Button
+          data-testid="open-remove"
+          colorType="red"
+          onClick={() => handleOpenModalRemove(tool.id)}
+        >
           Remove
         </Button>
       </div>

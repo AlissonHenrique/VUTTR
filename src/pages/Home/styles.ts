@@ -67,6 +67,7 @@ export const Form = styled.form`
 export const Container = styled.div`
   max-width: 992px;
   margin: 42px auto 0 auto;
+
   @media (max-width: 1100px) {
     margin: 42px 16px 0 16px;
   }

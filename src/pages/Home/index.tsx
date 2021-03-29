@@ -1,7 +1,6 @@
-import React, { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import api from "../../services/api";
-import { FormatTags } from "../../util/formatTags";
 
 import Button from "../../components/Button";
 import { Container, Form } from "./styles";
@@ -10,6 +9,7 @@ import { ModalAdd } from "../../components/ModalAdd";
 
 import { ModalRemove } from "../../components/ModalRemove";
 import { toast } from "react-toastify";
+
 interface Tools {
   id: number;
   title: string;
@@ -18,7 +18,7 @@ interface Tools {
   tags: string[];
 }
 
-function Home() {
+export function Home() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpenRemove, setModalOpenRemove] = useState(false);
   const [checkbox, setCheckbox] = useState<boolean>(false);
@@ -45,8 +45,8 @@ function Home() {
 
   async function handleSubmitAddModal(data: any) {
     try {
-      const response = await api.post("tools", data);
-      setTools([...tools, response.data]);
+      await api.post("tools", data);
+      setTools([...tools, data]);
     } catch (err) {
       console.log(err);
     }
@@ -63,10 +63,15 @@ function Home() {
   }
 
   async function handleRemove() {
-    await api.delete(`tools/${removeId}`);
-    const filterTool = [...tools].filter((tool) => tool.id !== removeId);
-    setTools(filterTool);
-    setModalOpenRemove(!modalOpenRemove);
+    try {
+      await api.delete(`tools/${removeId}`);
+      const filterTool = [...tools].filter((tool) => tool.id !== removeId);
+      setTools(filterTool);
+      setModalOpenRemove(!modalOpenRemove);
+      toast.success("Tool removed success");
+    } catch {
+      toast.error("Does not possible to remove");
+    }
   }
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();

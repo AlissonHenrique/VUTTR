@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal Remove should be able to open modal remove 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body
+    class="ReactModal__Body--open"
+  >
+    <div
+      data-react-modal-body-trap=""
+      style="position: absolute; opacity: 0;"
+      tabindex="0"
+    />
+    <div />
+    <div
+      data-react-modal-body-trap=""
+      style="position: absolute; opacity: 0;"
+      tabindex="0"
+    />
+    <div
+      class="ReactModalPortal"
+    >
+      <div
+        class="ReactModal__Overlay ReactModal__Overlay--after-open react-modal-overlay"
+      >
+        <div
+          aria-modal="true"
+          class="ReactModal__Content ReactModal__Content--after-open react-modal-content"
+          role="dialog"
+          tabindex="-1"
+        >
+          <div
+            class="header-modal"
+          >
+            <h4>
+              Remove tool
+            </h4>
+            <svg
+              color="#8F8A9B"
+              fill="currentColor"
+              height="20"
+              stroke="currentColor"
+              stroke-width="0"
+              style="color: rgb(143, 138, 155);"
+              viewBox="0 0 24 24"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7,7 L17,17 M7,17 L17,7"
+                fill="none"
+                stroke="#000"
+                stroke-width="2"
+              />
+            </svg>
+          </div>
+          <p>
+            Are you sutre you want to remove 
+            <b>
+              hotel?
+            </b>
+          </p>
+          <div
+            class="content-buttons"
+          >
+            <button
+              class="sc-bdfBwQ lntmAL red-2"
+            >
+              Cancel
+            </button>
+            <button
+              class="sc-bdfBwQ lntmAL blue-2"
+            >
+              Yes, remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div />,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

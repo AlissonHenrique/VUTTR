@@ -17,7 +17,6 @@ export function Modal({ children, isOpen, setIsOpen }: PropsModal) {
       shouldCloseOnOverlayClick={!false}
       onRequestClose={setIsOpen}
       isOpen={modalStatus}
-      ariaHideApp={false}
       overlayClassName="react-modal-overlay"
       className="react-modal-content"
     >

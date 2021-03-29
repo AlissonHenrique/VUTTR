@@ -9,15 +9,17 @@ export const GlobalStyle = createGlobalStyle`
 }
 html,
 body {
-  background: #f8f8f9;
-  height: 100%;
-  width: 100%;
+  background: #f8f8f9;  
 }
 body,
 input,
 textarea,
 button {
-  font: 400 16px "Source Sans Pro", sans-serif;
+  font: 400 16px "Source Sans Pro", sans-serif;  
+}
+html,body{
+  height: 100%; 
+   
 }
 h1,
 h2,
@@ -37,24 +39,30 @@ a {
   font-weight: 500;
 }
 .react-modal-overlay{
-  width: 100%;
-  height: 100%;
-  background: #170c3ae6 0% 0% no-repeat padding-box;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  z-index: 10;
-  overflow-y: hidden;
-  @media (max-width: 1920px) {
+  position:fixed;
+  background: #170c3ae6 0% 0%;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+ 
+ 
+   
+  /* @media (max-width: 1920px) {
     height: 1090px;
-  }
+  } */
 }
 .react-modal-content{
-  max-width: 600px;
+  position:relative;
+  width: 100%;
+  max-width: 600px;   
   background: #ffffff 0% 0% no-repeat;
   box-shadow: 0px 20px 25px #0000001a;
   border-radius: 5px;
-  margin: 10% auto 0 auto;
+  
   padding: 30px; 
   p {
     margin: 0 0 30px 0;
@@ -119,6 +127,6 @@ a {
     button {
       margin-left: 30px;
     }
-  }s
+  } 
 }
 `;
