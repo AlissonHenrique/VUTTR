@@ -1,8 +1,8 @@
 import { GrFormClose } from "react-icons/gr";
 import Button from "../Button";
 import { Modal } from "../Modal";
-import { useCallback, useRef, useState } from "react";
-import { FormatTags } from "../../util/formatTags";
+import { useCallback, useState } from "react";
+
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 interface PropsItems {
@@ -55,7 +55,7 @@ export function ModalAdd({ isOpen, setIsOpen, handleSubmit }: PropsModalAdd) {
         toast.success("Tool registred");
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
-          const errors = JSON.stringify(err.errors);
+          // const errors = JSON.stringify(err.errors);
           for (let index in err.inner) {
             toast.error(err.inner[index].message);
           }

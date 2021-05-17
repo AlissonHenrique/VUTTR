@@ -6,7 +6,7 @@
  Projeto Produzido Com React
 </h4>
 
-### :rocket:Technologies
+### :rocket:Tecologia
 
 - React
 
