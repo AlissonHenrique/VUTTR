@@ -1,4 +1,0 @@
-{
-  "/tools?q=": "/tools",
-  "/tools?tags_like=": "/tools/:tags"
-}

@@ -28,25 +28,21 @@ export function Home() {
 
   useEffect(() => {
     async function loadTools() {
-      const response = await api.get("/tools");
-      return setTools(response.data);
+      const response = await api.get<Tools[]>("/tools");
+      const format = response.data.map((item: Tools) => ({
+        ...item,
+        tags: item.tags.map((t: string) => `#${t} `),
+      }));
+
+      return setTools(format);
     }
     loadTools();
   }, []);
 
-  // useEffect(() => {
-  //   const cb = checkbox === true ? "tags" : "title";
-  //   const filter = list.filter((item) =>
-  //     item.title.toLowerCase().includes(search.toLowerCase())
-  //   );
-
-  //   setListFilter(filter);
-  // }, [list, search]);
-
-  async function handleSubmitAddModal(data: any) {
+  async function handleSubmitAddModal(data: Tools) {
     try {
-      await api.post("tools", data);
       setTools([...tools, data]);
+      await api.post("/tools", data);
     } catch (err) {
       console.log(err);
     }
@@ -64,9 +60,9 @@ export function Home() {
 
   async function handleRemove() {
     try {
-      await api.delete(`tools/${removeId}`);
-      const filterTool = [...tools].filter((tool) => tool.id !== removeId);
+      const filterTool = tools.filter((tool) => tool.id !== removeId);
       setTools(filterTool);
+      await api.delete(`tools/${removeId}`);
       setModalOpenRemove(!modalOpenRemove);
       toast.success("Tool removed success");
     } catch {
@@ -78,10 +74,15 @@ export function Home() {
     try {
       if (!checkbox) {
         const response = await api.get(`/tools/?q=${search}`);
+
         setTools(response.data);
       } else {
         const response = await api.get(`/tools/?tags_like=${search}`);
-        setSearch(response.data);
+        const format = response.data.map((item: Tools) => ({
+          ...item,
+          tags: item.tags.map((t: string) => `#${t} `),
+        }));
+        setTools(format);
       }
     } catch {
       toast.error("Word not found");
@@ -93,7 +94,7 @@ export function Home() {
         <h1>VUTTR</h1>
         <h4>Very useful Tools to Remenber</h4>
         <div className="box-search">
-          <Form onSubmit={handleSubmit}>
+          <Form onKeyUp={handleSubmit}>
             <input
               type="text"
               value={search}
@@ -114,7 +115,7 @@ export function Home() {
           </Button>
         </div>
 
-        {tools.map((tool) => (
+        {tools.map((tool: Tools) => (
           <Card
             key={tool.id}
             tool={tool}

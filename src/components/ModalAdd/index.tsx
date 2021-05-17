@@ -5,11 +5,13 @@ import { useCallback, useState } from "react";
 
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+
 interface PropsItems {
+  id: number;
   title: string;
   link: string;
   description: string;
-  tags: string;
+  tags: string[];
 }
 
 interface PropsModalAdd {
@@ -33,15 +35,17 @@ export function ModalAdd({ isOpen, setIsOpen, handleSubmit }: PropsModalAdd) {
           title: Yup.string().required("Title is required"),
           link: Yup.string().required("Link is required"),
           description: Yup.string().required("Description is required"),
-          tags: Yup.string().required("Tags is required"),
+          tags: Yup.array().required("Tags is required"),
         });
 
         const data = {
+          id: Math.floor(Math.random() * (1000 - 1)) + 1,
           title,
           link,
           description,
-          tags,
+          tags: tags.split(" ").map((t: string) => `#${t} `),
         };
+
         await schema.validate(data, {
           abortEarly: false,
         });

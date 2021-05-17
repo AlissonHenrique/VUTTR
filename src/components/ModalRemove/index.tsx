@@ -1,4 +1,3 @@
-import React from "react";
 import { GrFormClose } from "react-icons/gr";
 import Button from "../Button";
 import { Modal } from "../Modal";
