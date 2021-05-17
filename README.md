@@ -17,6 +17,9 @@
 - `yarn ou npm`
 - `yarn start ou npm start`
 
+### Preview
+
+- `https://tender-panini-0c19a1.netlify.app/`
 <br/>
 <p align="center"><img src="https://i.imgur.com/YXbQYkr.gif"></p>
 
