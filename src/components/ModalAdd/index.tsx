@@ -74,10 +74,11 @@ export function ModalAdd({ isOpen, setIsOpen, handleSubmit }: PropsModalAdd) {
         <h4>Add new tool</h4>
         <GrFormClose size={20} color="#8F8A9B" onClick={setIsOpen} />
       </div>
-      <form onSubmit={handleAddSubmit}>
+      <form onSubmit={handleAddSubmit} data-testid="form">
         <div className="content-inpt">
           <label>Tool Name</label>
           <input
+            data-testid="title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -86,6 +87,7 @@ export function ModalAdd({ isOpen, setIsOpen, handleSubmit }: PropsModalAdd) {
         <div className="content-inpt">
           <label>Tool Link</label>
           <input
+            data-testid="link"
             type="text"
             value={link}
             onChange={(e) => setLink(e.target.value)}
@@ -94,6 +96,7 @@ export function ModalAdd({ isOpen, setIsOpen, handleSubmit }: PropsModalAdd) {
         <div className="content-inpt">
           <label>Tool description</label>
           <textarea
+            data-testid="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -101,6 +104,7 @@ export function ModalAdd({ isOpen, setIsOpen, handleSubmit }: PropsModalAdd) {
         <div className="content-inpt">
           <label>Tags</label>
           <input
+            data-testid="tags"
             type="text"
             value={tags}
             onChange={(e) => setTags(e.target.value)}

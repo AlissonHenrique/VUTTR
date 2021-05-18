@@ -94,7 +94,7 @@ export function Home() {
         <h1>VUTTR</h1>
         <h4>Very useful Tools to Remenber</h4>
         <div className="box-search">
-          <Form onKeyUp={handleSubmit}>
+          <Form onKeyUp={handleSubmit} data-testid="form">
             <input
               type="text"
               value={search}
